@@ -10,7 +10,7 @@ A VS Code extension that detects ML API contract violations and generates execut
 
 - **Detects Contract Violations**: Analyzes Python code for ML library usage (TensorFlow, Keras, PyTorch, Scikit-learn) and identifies potential API misuse patterns using a hierarchical taxonomy (SAM/AMO/Hybrid classifications)
 - **Generates PyContracts**: Creates executable `@contract` decorators for both buggy and fixed code versions, ensuring minimal code changes while adding contract validation
-- **Automated Testing**: Runs an automated feedback loop to verify that buggy code fails with contract violations and fixed code passes validation
+- **Automated Testing**: Creates and runs an automated testing environment to verify that buggy code fails with contract violations and fixed code passes validation
 - **Persistent Environment**: Manages a persistent Python virtual environment with compatible library versions (TensorFlow 2.10.0, Keras 2.10.0, NumPy 1.21.6, PyContracts 1.8.12)
 
 ### Built With
@@ -117,7 +117,7 @@ ollama serve
 - **One-click Application**: Apply contracts directly to your code
 - **Note**: Generated contracts may require manual iteration for compatibility with your specific codebase and library versions
 
-## Taxonomy
+## Taxonomy Examples
 
 The extension uses a hierarchical taxonomy to classify ML contract violations, based on the research paper:
 
