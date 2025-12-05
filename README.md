@@ -27,7 +27,9 @@ A VS Code extension that detects ML API contract violations and generates execut
 
 - 🔍 **Live Code Analysis**: Analyzes Python files for ML API patterns in real-time
 - 🚨 **Contract Violation Detection**: Identifies potential ML API misuse patterns
-- 📊 **Multi-level Classification**: Uses hierarchical taxonomy to classify violations
+- 📊 **Multi-level Classification**: Uses hierarchical taxonomy to classify violations (Based on S. S. Khairunnesa, S. Ahmed, S. M. Imtiaz, H. Rajan, and G. T. Leavens, “What
+kinds of contracts do ml apis need?” Empirical Softw. Engg., vol. 28, no. 6, Oct. 2023.
+[Online]. Available: https://doi.org/10.1007/s10664-023-10320-z
 - ⚡ **PyContract Generation**: Generates executable contract specifications
 - 🎯 **Interactive Dashboard**: Beautiful UI to view violations and apply contracts
 - 🔧 **One-click Application**: Apply generated contracts directly to your code
