@@ -27,9 +27,7 @@ A VS Code extension that detects ML API contract violations and generates execut
 
 - 🔍 **Live Code Analysis**: Analyzes Python files for ML API patterns in real-time
 - 🚨 **Contract Violation Detection**: Identifies potential ML API misuse patterns
-- 📊 **Multi-level Classification**: Uses hierarchical taxonomy to classify violations (Based on S. S. Khairunnesa, S. Ahmed, S. M. Imtiaz, H. Rajan, and G. T. Leavens, “What
-kinds of contracts do ml apis need?” Empirical Softw. Engg., vol. 28, no. 6, Oct. 2023.
-[Online]. Available: https://doi.org/10.1007/s10664-023-10320-z
+- 📊 **Multi-level Classification**: Uses hierarchical taxonomy to classify violations
 - ⚡ **PyContract Generation**: Generates executable contract specifications
 - 🎯 **Interactive Dashboard**: Beautiful UI to view violations and apply contracts
 - 🔧 **One-click Application**: Apply generated contracts directly to your code
@@ -98,6 +96,8 @@ ollama serve
 4. **Generate Contracts**: Click "⚡ Generate PyContracts"
 5. **Apply Contracts**: Review and apply generated contracts to your code
 
+> **Note**: Generated contracts may require manual iteration for compatibility with your specific codebase, library versions, and use cases. Review and test contracts before deploying to production.
+
 ## Dashboard Features
 
 ### Action Buttons
@@ -115,10 +115,13 @@ ollama serve
 - **Natural Language Explanations**: Clear descriptions of what contracts check
 - **Actionable Insights**: Specific steps to fix violations
 - **One-click Application**: Apply contracts directly to your code
+- **Note**: Generated contracts may require manual iteration for compatibility with your specific codebase and library versions
 
 ## Taxonomy
 
-The extension uses a hierarchical taxonomy to classify ML contract violations:
+The extension uses a hierarchical taxonomy to classify ML contract violations, based on the research paper:
+
+> S. S. Khairunnesa, S. Ahmed, S. M. Imtiaz, H. Rajan, and G. T. Leavens, "What kinds of contracts do ml apis need?" Empirical Softw. Engg., vol. 28, no. 6, Oct. 2023. [Online]. Available: https://doi.org/10.1007/s10664-023-10320-z
 
 ### Level 1: Central Contract Category
 - **SAM**: Single API Method violations
@@ -225,92 +228,11 @@ npm run lint
 
 ## Future Work
 
-### Enhanced ML Library Support
-- **Additional Frameworks**: Support for JAX, Hugging Face Transformers, XGBoost, LightGBM
-- **Version-Specific Contracts**: Handle different API versions (e.g., TensorFlow 1.x vs 2.x)
-- **Custom Library Support**: Allow users to define custom ML library patterns and contracts
+1. **Automated Feedback Loop**: Implement a fully automated feedback loop that iteratively tests generated contracts, collects execution results, and uses LLM feedback to automatically refine and improve contract specifications until they pass validation.
 
-### Expanded Dataset & RAG Improvements
-- **Larger Dataset**: Expand from 79 to 500+ examples across multiple ML frameworks
-- **Multi-Framework Examples**: Include PyTorch, Scikit-learn, and other library examples
-- **Dynamic Dataset Updates**: Allow users to contribute examples and update the dataset
-- **Better Embeddings**: Fine-tune embeddings specifically for ML code patterns
-- **Contextual RAG**: Improve context retrieval with code structure awareness
+2. **Multi-GenAI Model Support**: Add support for multiple generative AI models including Claude (Anthropic), Gemini (Google), and local LLMs via Ollama, allowing users to choose the best model for their use case and enabling offline functionality.
 
-### Advanced Contract Features
-- **Custom Contract Definitions**: Allow users to define domain-specific contracts
-- **Contract Templates**: Pre-built contract templates for common ML patterns
-- **Contract Composition**: Support for complex, multi-level contract combinations
-- **Performance Contracts**: Contracts that validate computational complexity
-- **Resource Contracts**: Contracts for memory usage, GPU requirements, etc.
-
-### Real-Time Analysis & Linting
-- **Live Linting**: Real-time contract violation detection as you type
-- **Inline Suggestions**: Show contract violations directly in the editor with quick fixes
-- **IntelliSense Integration**: Contract-aware autocomplete and suggestions
-- **Diagnostic Panel**: Dedicated panel showing all contract issues across workspace
-
-### User Experience Enhancements
-- **Interactive Tutorial**: Guided walkthrough for first-time users
-- **Contract Visualization**: Visual diagrams showing contract relationships
-- **Code Diff View**: Side-by-side comparison of buggy vs fixed code
-- **Export/Import**: Export contracts to share with team or import from templates
-- **Batch Processing**: Analyze multiple files or entire projects at once
-- **History & Undo**: Track contract application history with undo capability
-
-### Testing & Quality Assurance
-- **Unit Test Generation**: Auto-generate unit tests based on contracts
-- **Integration with pytest**: Generate pytest test cases from contracts
-- **Coverage Metrics**: Track contract coverage across codebase
-- **Regression Testing**: Detect when code changes break existing contracts
-- **CI/CD Integration**: GitHub Actions, GitLab CI, Jenkins plugins
-
-### Performance & Scalability
-- **Incremental Analysis**: Only re-analyze changed code sections
-- **Caching**: Cache RAG results and contract generation for faster responses
-- **Parallel Processing**: Analyze multiple files concurrently
-- **Background Processing**: Run analysis in background without blocking UI
-- **Optimized Embeddings**: Use faster embedding models or local alternatives
-
-### Collaboration & Sharing
-- **Team Workspace**: Share contracts and violations across team members
-- **Contract Marketplace**: Community-contributed contract templates
-- **Version Control Integration**: Track contract changes in git history
-- **Code Review Integration**: Highlight contract violations in PR reviews
-- **Slack/Teams Notifications**: Alert team about critical contract violations
-
-### Advanced AI Features
-- **Multi-Model Support**: Support for Claude, Gemini, and local LLMs (Ollama)
-- **Fine-Tuned Models**: Train specialized models for ML contract detection
-- **Few-Shot Learning**: Improve accuracy with user-provided examples
-- **Explainability**: Better explanations of why violations occur and how to fix
-- **Learning Mode**: Extension learns from user corrections to improve suggestions
-
-### Developer Tools
-- **Contract Debugger**: Step-through contract validation to understand failures
-- **Performance Profiling**: Measure contract validation overhead
-- **Contract Metrics Dashboard**: Visualize contract coverage, violations, trends
-- **API Documentation**: Auto-generate API docs with contract specifications
-- **Migration Tools**: Help migrate code between ML framework versions
-
-### Accessibility & Internationalization
-- **Multi-Language Support**: Support for non-English code comments and documentation
-- **Accessibility**: Screen reader support, keyboard navigation improvements
-- **Dark/Light Themes**: Better theme integration and customization
-- **Localization**: UI translations for different languages
-
-### Research & Academic
-- **Empirical Studies**: Collect anonymized data on common ML contract violations
-- **Benchmark Suite**: Standardized test suite for ML contract detection tools
-- **Academic Publications**: Publish findings on ML contract patterns
-- **Open Dataset**: Release curated dataset for research community
-
-### Integration Ecosystem
-- **Jupyter Notebook Support**: Detect and fix contracts in .ipynb files
-- **Google Colab Extension**: Browser extension for Colab notebooks
-- **PyCharm Plugin**: Port functionality to PyCharm IDE
-- **VS Code Remote**: Support for remote development environments
-- **Docker Integration**: Pre-configured Docker images with all dependencies
+3. **Enhanced Compatibility & Iteration**: Improve automatic compatibility handling and provide better tooling for manual iteration of generated contracts to ensure they work seamlessly with different library versions and codebases.
 
 ## Contributing
 
@@ -326,7 +248,7 @@ MIT License - see LICENSE file for details
 
 ## Acknowledgments
 
-- Based on research: "Characterizing Machine Learning Contracts Using Large Language Models"
+- **Taxonomy**: Based on "What kinds of contracts do ml apis need?" by Khairunnesa et al. (Empirical Software Engineering, 2023) - https://doi.org/10.1007/s10664-023-10320-z
 - Uses PyContracts library for contract specifications
 - Integrates OpenAI GPT-4o for AI-powered analysis
 - Built with VS Code Extension API
