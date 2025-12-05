@@ -1,0 +1,49 @@
+RQ1: Most frequent contracts for ML APIs (§3.1.1)
+Finding:
+1. Constraint check on single arguments of an API.
+2. Order of API calls that become a requirement eventually.
+Actionable Insight:
+This is good news because the software engineering (SE) community can employ existing contract mining approaches to also mine contracts for ML APIs. However, there might be a need to combine behavioral and temporal contract mining approaches that have been independently developed thus far.
+
+---
+
+RQ4: ML API contracts that are commonly violated occur in earlier ML pipeline stages (§3.4)
+Finding:
+ML API contract violations happen mostly in earlier phases of ML pipelines.
+Actionable Insight:
+A verification system with ML contract knowledge can explain whether a bug in the ML system that used those APIs stemmed from an API contract breach.
+
+---
+
+RQ3: The absence of precise error messages (§3.1.2)
+Finding:
+System failures lead to imprecise error messages, making contract comprehension and violation detection more challenging.
+Actionable Insight:
+Since domain experts can understand the challenging ML contracts (§3.3), encoding this knowledge as contracts can enable improved debugging mechanisms.
+
+---
+
+RQ1: ML APIs require several type checking contracts and interdependency between behavioral and temporal contracts (§3.1.1 and Table 6)
+Finding:
+ML APIs require special type-checking and behavioral-temporal interdependent contracts.
+Actionable Insight:
+Programming methodology and tools for design-by-contract should include sufficient expressiveness to handle these additional types of contracts seen in ML APIs.
+
+An example of an IC-1 contract is given in SO post 6, which shows an ML
+API users trying to use the TensorFlow API random_shuffle() to shuffle a
+Tensor, a, with some set seed value. One of the solutions mentioned in the
+accepted answer says that to do that, one should specify the argument seed
+with the desired value, e.g., the argument seed gets the value 42. The root
+cause of this contract violation is that acceptable input value is not supplied
+to (the random_shuffle()) method.
+Inter-argument contracts (IC-2): IC-2 contracts involve more than one
+argument to an API method, possibly using comparisons or logical expressions.
+For example, in SO post 4, the matmul() API from TensorFlow requires that
+the type of the second argument should match the type of the first argument.
+A comparison expression can express this contract, so it belongs to IC-2. The
+root cause of this contract violation is that the (matmul()) API is missing
+input value/type dependency between arguments. Another example 7
+for this category is nn.softmax_cross_entropy_with_logits(), an API from
+TensorFlow, which requires that the logits and labels arguments must have the same shape (i.e., [batch_size, num_classes])
+
+Eventually (F): Eventually contracts are AMO contracts where the ordering

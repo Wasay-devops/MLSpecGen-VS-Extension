@@ -1,0 +1,44 @@
+[
+  {
+    "postURL": "https://stackoverflow.com/questions/40904979",
+    "title": "TensorFlow string constant with 'b' prefix",
+    "question": "During the test of TensorFlow r0.12(CPU) installed on Windows 10, I found that the printed string constant is always with an 'b' in the end. The print of python is normal. I cannot figure out the reason so came here for help. The code is as follows:\n\n>>>import tensorflow as tf\n>>>hello = tf.constant('Hello, TensorFlow!')\n>>>sess = tf.Session()\n>>>print(sess.run(hello))\nb'Hello, TensorFlow!'",
+    "answer": "Use sess.run(hello).decode() because it is a bytestring. decode method will return the string.\n\nYour print statement must look like\n\nprint(sess.run(hello).decode())",
+    "mlApiName": "tf.constant",
+    "embedding": [0.1, 0.2, 0.3, 0.4, 0.5],
+    "label": {
+      "level1": "SAM",
+      "level2": "DT",
+      "level3": "PT",
+      "leafContractCategory": "PT",
+      "rootCause": "Unacceptable Input Type",
+      "effect": "IF",
+      "mlLibrary": "TensorFlow",
+      "contractViolationLocation": "Model Evaluation",
+      "detectionTechnique": "Static",
+      "reasonsForNotLabeling": "NA",
+      "reasonsForLabeling": "Level 1 (Central Contract Category): SAM\nThe post addresses a violation involving the use of a single API method, specifically tf.constant, which is the sole API causing the issue.\n\nLevel 2: DT\nThe core problem pertains to incorrect handling of data types—specifically, string literals versus byte strings—which TensorFlow expects.\n\nLevel 3 (Hybrid Patterns): PT\nThe issue is specifically caused by a primitive Python data type mismatch (string versus byte representation), leading to unexpected results.\n\nLeaf Contract Category: PT\nMatches the Level 3 categorization exactly, as the fundamental data type causing the problem is a primitive type.\n\nRoot Cause: Unacceptable Input Type\nThe TensorFlow API expects byte strings, but it receives regular string literals, resulting in the inappropriate input being passed.\n\nEffect: Incorrect Functionality\nAlthough the program does not crash, it produces incorrect output by appending an unintended character (b) to the printed result.\n\nML Library: TensorFlow\nTensorFlow's API method specifically triggered this data handling issue.\n\nContract Violation Location: Model Evaluation\nThis problem emerges clearly during the evaluation phase when results are printed after session execution.\n\nDetection Technique: Static Analysis\nThe issue can be identified through inspection of the source code without execution."
+    }
+  },
+  {
+    "postURL": "https://stackoverflow.com/questions/45175469",
+    "title": "TensorFlow concat TypeError with multiple values for argument 'axis'",
+    "question": "This is my convolution neural net:\n\ndef convolutional_neural_network(frame):\n    wts = {'conv1': tf.random_normal([5, 5, 3, 32]),\n            'conv2': tf.random_normal([5, 5, 32, 64]),\n            'fc': tf.random_normal([158*117*64 + 4, 128]),\n            'out': tf.random_normal([128, n_classes])\n            }\n    biases = {'fc': tf.random_normal([128]),\n                'out': tf.random_normal([n_classes])\n            }\n\n    conv1 = conv2d(frame, wts['conv1'])\n    conv1 = maxpool2d(conv1)\n    conv2 = conv2d(conv1, wts['conv2'])\n    conv2 = maxpool2d(conv2)\n    conv2 = tf.reshape(conv2, shape=[-1,158*117*64])\n    print(conv2)\n    print(controls_at_each_frame)\n    conv2 = tf.concat(conv2, controls_at_each_frame, axis=1)\n    fc = tf.add(tf.matmul(conv2, wts['fc']), biases['fc'])\n\n    output = tf.nn.relu(tf.add(tf.matmul(fc, wts['out']), biases['out']))\n\n    return output\n\nI am making a self driving car in GTA San Andreas. What I want to do is concatenate frame and controls_at_each_frame into a single layer which will be then sent to an fully connected layer. When I run I get an error TypeError: concat() got multiple values for argument 'axis' at\n\nconv2 = tf.concat(conv2, controls_at_each_frame, axis=1)\nCould you explain why this happening?",
+    "answer": "Try\n\nconv2 = tf.concat((conv2, controls_at_each_frame), axis=1).\n\nNote I'm putting the two frames that you want to concatenate within parentheses, as specified here.",
+    "mlApiName": "tf.concat",
+    "embedding": [0.2, 0.3, 0.4, 0.5, 0.6],
+    "label": {
+      "level1": "SAM",
+      "level2": "DT",
+      "level3": "IC-2",
+      "leafContractCategory": "IC-2",
+      "rootCause": "Unacceptable Input Value",
+      "effect": "Crash",
+      "mlLibrary": "TensorFlow",
+      "contractViolationLocation": "Model Construction",
+      "detectionTechnique": "Runtime Checking",
+      "reasonsForNotLabeling": "NA",
+      "reasonsForLabeling": "Level 1 (Central Contract Category): SAM\nThe post addresses a violation involving the use of a single API method, specifically tf.concat, which is the sole API causing the issue.\n\nLevel 2: DT\nThe core problem pertains to incorrect handling of data types—specifically, the way arguments are passed to the concat function.\n\nLevel 3 (Hybrid Patterns): IC-2\nThe issue involves inter-argument contract violation where multiple arguments are passed incorrectly to the concat function.\n\nLeaf Contract Category: IC-2\nMatches the Level 3 categorization exactly, as the fundamental issue is with how multiple arguments are passed to the function.\n\nRoot Cause: Unacceptable Input Value\nThe TensorFlow concat function expects arguments to be passed in a specific way (as a tuple), but they are passed as separate arguments.\n\nEffect: Crash\nThe program crashes with a TypeError due to incorrect argument passing.\n\nML Library: TensorFlow\nTensorFlow's concat API method specifically triggered this issue.\n\nContract Violation Location: Model Construction\nThis problem occurs during the model construction phase when building the neural network.\n\nDetection Technique: Runtime Checking\nThe issue can only be detected when the code is executed and the concat function is called."
+    }
+  }
+]

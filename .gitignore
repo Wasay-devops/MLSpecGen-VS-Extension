@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+# Note: package-lock.json should be committed for reproducible builds
+
+# Build output
+out/
+*.vsix
+
+# Virtual environments
+venv/
+.venv/
+ml_contract_persistent_venv_v2/
+**/__pycache__/
+*.pyc
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+*.log
+logs/
+feedback_*.log
+test_output.txt
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated/Output files
+ml-contract-outputs/
+*.csv
+*.whl
+*.tar.gz
+
+# Test/Development files (optional - uncomment if you want to exclude)
+# test_*.py
+# *_test.js
+# gpt_ragtest.js
+# claude_ragtest.js
+
+# Old versions
+VS Extension V2/
+feedbackService.js
+
+# Personal files
+resume_*.tex
+*.key
+*.pem

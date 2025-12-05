@@ -1,0 +1,255 @@
+ML Contract Violation Taxonomy
+
+This document defines the taxonomy for classifying ML contract violations based on empirical analysis of Stack Overflow posts.
+
+## Level 1: Central Contract Category
+
+### SAM (Single API Method)
+Contracts involving a single API method, typically focusing on preconditions and postconditions.
+- Examples: Parameter validation, return type checking, input constraints
+- Focus: Individual method behavior and constraints
+
+### AMO (API Method Order)
+Contracts that specify the required order of API method calls.
+- Examples: fit() before predict(), compile() before fit()
+- Focus: Temporal sequencing of method calls
+
+### Hybrid
+Combination of behavioral (SAM) and temporal (AMO) contracts.
+- Examples: Method order with parameter validation
+- Focus: Both individual method constraints and call sequencing
+
+## Level 2: Contract Subcategories
+
+### DT (Data Type)
+Contracts related to the expected data types of API arguments.
+- Examples: Tensor shape validation, dtype requirements
+- Focus: Type system constraints
+
+### BET (Boolean Expression Type)
+Contracts involving boolean expressions or conditions on API arguments.
+- Examples: Range validation, condition checking
+- Focus: Logical constraints and conditions
+
+### G (Always)
+Temporal contracts that must always hold during execution.
+- Examples: Invariant conditions, persistent state requirements
+- Focus: Continuous validity requirements
+
+### F (Eventually)
+Temporal contracts that must hold at some point during execution.
+- Examples: Eventual consistency, delayed validation
+- Focus: Future state requirements
+
+### SAI (Selection)
+Contracts that involve selecting among multiple valid API usage patterns.
+- Examples: Alternative parameter combinations, optional configurations
+- Focus: Choice-based constraints
+
+### SL (Selection)
+Contracts that involve selecting among multiple valid API usage patterns.
+- Examples: Alternative parameter combinations, optional configurations
+- Focus: Choice-based constraints
+
+## Level 3: Hybrid Patterns
+
+### PT (Primitive Type)
+Contracts expecting primitive data types (e.g., int, float, string).
+- Examples: Integer ranges, float precision, string format
+- Focus: Basic type constraints
+
+### BIT (Built-in Type)
+Contracts expecting built-in data structures (e.g., list, dict, tuple).
+- Examples: List length, dictionary keys, tuple structure
+- Focus: Container type constraints
+
+### RT (Reference Type)
+Contracts expecting references to objects or classes.
+- Examples: Model instances, layer objects, optimizer references
+- Focus: Object reference constraints
+
+### MT (ML Type)
+Contracts expecting machine learning-specific types (e.g., tensors, models).
+- Examples: Tensor shapes, model architecture, layer compatibility
+- Focus: ML-specific type constraints
+
+### IC-1 (Intra-argument Contract)
+Contracts involving conditions within a single API argument.
+- Examples: Parameter value ranges, format validation
+- Focus: Single parameter constraints
+
+### IC-2 (Inter-argument Contract)
+Contracts involving conditions between multiple API arguments.
+- Examples: Shape compatibility, type matching, dependency validation
+- Focus: Multi-parameter relationships
+
+## Root Causes
+
+### Unacceptable Input Type
+The API receives an input of the wrong type.
+- Examples: String instead of integer, wrong tensor dtype
+- Impact: Type errors, runtime exceptions
+
+### Unacceptable Input Value
+The API receives an input of the correct type but invalid value.
+- Examples: Negative dimensions, invalid ranges, malformed data
+- Impact: Logic errors, unexpected behavior
+
+### Missing Options
+Required optional parameters are not provided.
+- Examples: Missing activation function, unspecified optimizer
+- Impact: Default behavior, potential issues
+
+### Missing Input Value/Type Dependency
+Input values depend on other inputs but dependency is not satisfied.
+- Examples: Shape mismatch, type incompatibility
+- Impact: Runtime errors, data corruption
+
+### Missing Input value-Method order Dependency
+Input values depend on method call order but order is incorrect.
+- Examples: Using uninitialized variables, calling methods out of sequence
+- Impact: State errors, undefined behavior
+
+### Missing Required Method Order
+Methods must be called in a specific order but order is violated.
+- Examples: fit() before predict(), compile() before fit()
+- Impact: State errors, functionality failures
+
+### Missing Required State-specific Method Order
+Methods must be called in order based on current state but state is incorrect.
+- Examples: Training vs inference mode, model state dependencies
+- Impact: Mode errors, incorrect behavior
+
+## Effects
+
+### Crash
+The program terminates unexpectedly due to an exception.
+- Examples: RuntimeError, ValueError, TypeError
+- Impact: Complete failure, data loss
+
+### IF (Incorrect Functionality)
+The program runs but produces incorrect results.
+- Examples: Wrong predictions, incorrect calculations
+- Impact: Silent failures, unreliable output
+
+### BP (Bad Performance)
+The program runs but with degraded performance.
+- Examples: Slow execution, memory issues, inefficient operations
+- Impact: Resource waste, poor user experience
+
+### MOB (Model Output Bias)
+The model produces biased or skewed outputs.
+- Examples: Unequal accuracy across classes, systematic errors
+- Impact: Unfair results, reduced model quality
+
+### Unknown
+The effect cannot be determined from the available information.
+- Examples: Insufficient context, unclear error messages
+- Impact: Difficult debugging, uncertain outcomes
+
+## Contract Violation Locations
+
+### Model Construction
+Violations occurring during model architecture definition.
+- Examples: Layer configuration, architecture setup
+- Focus: Model structure and design
+
+### Train
+Violations occurring during model training.
+- Examples: Training loop, optimization, data feeding
+- Focus: Learning process and optimization
+
+### Model Evaluation
+Violations occurring during model testing and validation.
+- Examples: Test data processing, metric calculation
+- Focus: Performance assessment
+
+### Data Preprocessing
+Violations occurring during data preparation.
+- Examples: Data cleaning, transformation, normalization
+- Focus: Input data preparation
+
+### Prediction
+Violations occurring during model inference.
+- Examples: Input validation, output processing
+- Focus: Inference and prediction
+
+### Load
+Violations occurring during model loading and deserialization.
+- Examples: File loading, model restoration
+- Focus: Model persistence
+
+### Model Initialization
+Violations occurring during model instantiation.
+- Examples: Constructor calls, parameter setup
+- Focus: Model creation and setup
+
+## Detection Techniques
+
+### Static
+Violations that can be detected without executing the code.
+- Examples: Type checking, syntax analysis, static analysis
+- Focus: Compile-time detection
+
+### Runtime Checking
+Violations that require code execution to detect.
+- Examples: Dynamic analysis, execution monitoring, runtime validation
+- Focus: Execution-time detection
+
+## Reasons for Labeling
+
+### NA (Not Applicable)
+The post does not contain ML contract violations.
+- Examples: General programming questions, non-ML topics
+- Focus: Non-relevant content
+
+### NI (Not Informative)
+The post lacks sufficient information to determine violations.
+- Examples: Incomplete code, unclear descriptions
+- Focus: Insufficient context
+
+### IM (Insufficient ML Context)
+The post involves ML but lacks contract-specific information.
+- Examples: General ML questions, theoretical discussions
+- Focus: Limited contract relevance
+
+## Usage Guidelines
+
+1. **Level 1**: Choose only one best-fitting label (SAM, AMO, or Hybrid)
+2. **Level 2**: Choose only one best-fitting label (DT, BET, G, F, SAI, or SL)
+3. **Level 3**: You may return multiple labels if appropriate, separated by commas
+4. **Leaf Contract Category**: Should match Level 3 — one or more values
+5. **Root Cause**: Choose the most specific applicable cause
+6. **Effect**: Choose the most likely outcome of the violation
+7. **Contract Violation Location**: Choose the most relevant pipeline stage
+8. **Detection Technique**: Choose based on how the violation would be detected
+9. **Reasons for Labeling**: Provide clear explanation for the classification
+
+## Examples
+
+### Example 1: Shape Mismatch
+- **Level 1**: SAM (Single API Method)
+- **Level 2**: DT (Data Type)
+- **Level 3**: MT (ML Type)
+- **Root Cause**: Unacceptable Input Value
+- **Effect**: Crash
+- **Location**: Model Evaluation
+- **Detection**: Runtime Checking
+
+### Example 2: Missing fit() Call
+- **Level 1**: AMO (API Method Order)
+- **Level 2**: G (Always)
+- **Level 3**: IC-2 (Inter-argument Contract)
+- **Root Cause**: Missing Required Method Order
+- **Effect**: Crash
+- **Location**: Prediction
+- **Detection**: Runtime Checking
+
+### Example 3: Parameter Validation
+- **Level 1**: SAM (Single API Method)
+- **Level 2**: BET (Boolean Expression Type)
+- **Level 3**: PT (Primitive Type)
+- **Root Cause**: Unacceptable Input Value
+- **Effect**: IF (Incorrect Functionality)
+- **Location**: Model Construction
+- **Detection**: Static
